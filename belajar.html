@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: 'Fredoka', sans-serif; /* Font ramah anak */
+            font-family: 'Fredoka', sans-serif;
             margin: 0;
             background-color: var(--bg-color);
             color: var(--text-dark);
@@ -35,6 +35,7 @@
             height: 100vh;
             overflow-y: auto;
             border-right: 4px solid #C8E6C9;
+            z-index: 100;
         }
 
         .sidebar-header {
@@ -82,7 +83,7 @@
             box-sizing: border-box;
         }
 
-        /* Kotak Pengantar (Dashboard) */
+        /* Dashboard Utama */
         .welcome-box {
             background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
             padding: 35px;
@@ -105,7 +106,7 @@
             line-height: 1.6;
         }
 
-        /* Grid Kotak Menu Bab */
+        /* Kotak Bab di Halaman Utama */
         .bab-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -130,17 +131,8 @@
             box-shadow: 0 15px 25px rgba(0,0,0,0.2);
         }
 
-        .bab-card h3 {
-            margin: 0;
-            font-size: 1.8rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .bab-card p {
-            margin: 10px 0 0 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
+        .bab-card h3 { margin: 0; font-size: 1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .bab-card p { margin: 10px 0 0 0; font-size: 1.1rem; font-weight: 600; }
 
         .bg-1 { background: linear-gradient(135deg, #FF9A9E, #FECFEF); }
         .bg-2 { background: linear-gradient(135deg, #A18CD1, #FBC2EB); }
@@ -148,7 +140,7 @@
         .bg-4 { background: linear-gradient(135deg, #F6D365, #FDA085); }
         .bg-5 { background: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
 
-        /* Halaman Materi (Per Bab) */
+        /* Halaman Bab */
         .chapter-section {
             display: none;
             background: white;
@@ -179,64 +171,76 @@
             border-bottom: 3px dashed #eee;
         }
 
-        /* Desain Accordion (Sub-Bab) */
-        details {
-            background-color: #fff;
+        /* --- DESAIN BARU: Menu Tab Sub-Bab --- */
+        .subbab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .subbab-btn {
+            background-color: #FAFAFA;
             border: 2px solid #E0E0E0;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            overflow: hidden;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: #666;
             transition: all 0.3s;
         }
 
-        details[open] {
+        .subbab-btn:hover {
+            background-color: #FFF3E0;
             border-color: var(--accent);
-            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.2);
+            color: var(--accent);
         }
 
-        summary {
-            padding: 20px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            cursor: pointer;
+        .subbab-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Kotak Konten Sub-Bab yang Terpisah */
+        .subbab-content {
+            display: none;
+            padding: 30px;
             background-color: #FAFAFA;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--primary-dark);
+            border: 2px solid #E0E0E0;
+            border-radius: 20px;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
         }
 
-        summary::-webkit-details-marker { display: none; }
-        summary:after { content: '🔽'; font-size: 1.2rem; }
-        details[open] summary:after { content: '🔼'; }
-
-        .sub-content {
-            padding: 25px;
-            background-color: white;
-            border-top: 2px solid #E0E0E0;
-            text-align: center;
+        .subbab-content.active {
+            display: block;
         }
 
         .desc-text {
             background-color: #FFF9C4;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
             color: #333;
-            border-left: 5px solid #FFC107;
+            border-left: 6px solid #FFC107;
             text-align: left;
         }
 
-        .sub-content img {
+        .subbab-content img {
             max-width: 100%;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             margin: 10px;
             transition: transform 0.3s;
         }
-        .sub-content img:hover { transform: scale(1.02); }
+        .subbab-content img:hover { transform: scale(1.02); }
 
         /* Video Iframe */
         .iframe-container {
@@ -246,7 +250,6 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            margin-top: 15px;
         }
         .iframe-container iframe {
             position: absolute;
@@ -255,12 +258,19 @@
             border: 0;
         }
 
-        /* Tombol Interaktif */
+        /* Area Tombol Aksi (Game & Quiz) */
         .action-area {
             text-align: center;
             margin-top: 40px;
-            padding-top: 20px;
-            border-top: 3px dashed #eee;
+            padding-top: 25px;
+            border-top: 3px dashed #ddd;
+            background-color: #fcfcfc;
+            border-radius: 15px;
+        }
+        
+        .action-area h3 {
+            color: var(--primary-dark);
+            margin-top: 0;
         }
 
         .btn {
@@ -340,46 +350,42 @@
             <h2 class="chapter-title">📖 BAB 1: Sunnah Rawatib</h2>
             <p class="chapter-desc">Pernahkah kamu mendengar tentang shalat pengawal? Ya, Shalat Rawatib adalah shalat sunnah yang menemani shalat fardhu kita. Yuk, cari tahu rahasia kehebatannya!</p>
             
-            <details>
-                <summary>📚 1. Pengertian & Fungsi Sholat Rawatib</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Apa sih Sholat Rawatib itu? Dan kenapa kita dianjurkan mengerjakannya? Yuk lihat gambar ini untuk tahu jawabannya!</div>
-                    <img src="https://i.ibb.co.com/bjLy00SD/1.png" alt="Materi 1">
-                    <img src="https://i.ibb.co.com/tMqqQ2B3/2.png" alt="Pengertian Sholat Rawatib">
-                    <img src="https://i.ibb.co.com/0RJmTRHN/3.png" alt="Fungsi sholat rawatib">
-                </div>
-            </details>
+            <div class="subbab-nav">
+                <button class="subbab-btn active" onclick="openSubBab(event, 'bab1-sub1', 'bab1')">📚 1. Pengertian</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab1-sub2', 'bab1')">⏰ 2. Waktu & Rakaat</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab1-sub3', 'bab1')">🌟 3. Manfaat & Cara</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab1-sub4', 'bab1')">🎬 4. Video</button>
+            </div>
 
-            <details>
-                <summary>⏰ 2. Waktu Pelaksanaan & Jumlah Rakaat</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Shalat ini ada yang dikerjakan sebelum (Qabliyah) dan sesudah (Ba'diyah) shalat wajib, lho. Jangan sampai tertukar, ya!</div>
-                    <img src="https://i.ibb.co.com/svcGMx2N/4.png" alt="Waktu qabliyah">
-                    <img src="https://i.ibb.co.com/WNx2Nj4D/5.png" alt="Waktu ba’diyah">
-                    <img src="https://i.ibb.co.com/BVxQyyqM/6.png" alt="Jumlah rakaat">
-                </div>
-            </details>
+            <div id="bab1-sub1" class="subbab-content active">
+                <div class="desc-text">Apa sih Sholat Rawatib itu? Dan kenapa kita dianjurkan mengerjakannya? Yuk lihat gambar ini untuk tahu jawabannya!</div>
+                <img src="https://i.ibb.co.com/bjLy00SD/1.png" alt="Materi 1">
+                <img src="https://i.ibb.co.com/tMqqQ2B3/2.png" alt="Pengertian Sholat Rawatib">
+                <img src="https://i.ibb.co.com/0RJmTRHN/3.png" alt="Fungsi sholat rawatib">
+            </div>
 
-            <details>
-                <summary>🌟 3. Manfaat & Cara Mengerjakan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Wah, ternyata manfaatnya luar biasa banget, bisa dibangunkan rumah di surga! Ikuti panduan praktis ini ya.</div>
-                    <img src="https://i.ibb.co.com/RpjzxMMG/7.png" alt="Manfaat">
-                    <img src="https://i.ibb.co.com/HpGpZwFJ/8.png" alt="Cara mengerjakan">
-                </div>
-            </details>
+            <div id="bab1-sub2" class="subbab-content">
+                <div class="desc-text">Shalat ini ada yang dikerjakan sebelum (Qabliyah) dan sesudah (Ba'diyah) shalat wajib, lho. Jangan sampai tertukar, ya!</div>
+                <img src="https://i.ibb.co.com/svcGMx2N/4.png" alt="Waktu qabliyah">
+                <img src="https://i.ibb.co.com/WNx2Nj4D/5.png" alt="Waktu ba’diyah">
+                <img src="https://i.ibb.co.com/BVxQyyqM/6.png" alt="Jumlah rakaat">
+            </div>
 
-            <details>
-                <summary>🎬 4. Tonton Video Penjelasan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Yuk, tonton video animasi seru ini supaya kamu makin paham cara dan keutamaan shalat Rawatib!</div>
-                    <div class="iframe-container">
-                        <iframe src="https://www.youtube.com/embed/7o30T9-NYI4?si=um2XhuEr7gB6WeKc" allowfullscreen></iframe>
-                    </div>
+            <div id="bab1-sub3" class="subbab-content">
+                <div class="desc-text">Wah, ternyata manfaatnya luar biasa banget, bisa dibangunkan rumah di surga! Ikuti panduan praktis ini ya.</div>
+                <img src="https://i.ibb.co.com/RpjzxMMG/7.png" alt="Manfaat">
+                <img src="https://i.ibb.co.com/HpGpZwFJ/8.png" alt="Cara mengerjakan">
+            </div>
+
+            <div id="bab1-sub4" class="subbab-content">
+                <div class="desc-text">Yuk, tonton video animasi seru ini supaya kamu makin paham cara dan keutamaan shalat Rawatib!</div>
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/7o30T9-NYI4?si=um2XhuEr7gB6WeKc" allowfullscreen></iframe>
                 </div>
-            </details>
+            </div>
 
             <div class="action-area">
+                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
                     <a href="https://gemini.google.com/share/a2b81728db79" target="_blank" class="btn btn-game">🎮 Teka-Teki Pasukan Rawatib</a>
                     <span class="btn-desc">Uji daya ingatmu! Cocokkan waktu dan rakaat.</span>
@@ -395,104 +401,98 @@
             <h2 class="chapter-title">🌙 BAB 2: Shalat Malam Hari</h2>
             <p class="chapter-desc">Malam hari bukan cuma untuk tidur, lho! Di bulan Ramadhan, ada shalat malam yang pahalanya berlimpah. Mari kita kenalan dengan Tarawih dan Witir!</p>
             
-            <details>
-                <summary>🕌 1. Pengertian, Hukum & Waktu Shalat Tarawih</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Kenapa ya dinamakan shalat Tarawih? Kapan saja kita bisa mengerjakannya? Ayo kita cari tahu!</div>
-                    <img src="https://i.ibb.co.com/PzTjqrrT/1.png" alt="Materi">
-                    <img src="https://i.ibb.co.com/Y76jRjG3/2.png" alt="Pengertian Shalat Tarawih">
-                    <img src="https://i.ibb.co.com/s9jG4rJQ/3.png" alt="Hukum dan waktu">
-                    <img src="https://i.ibb.co.com/HfGM2BKq/4.png" alt="Jumlah rakaat">
-                </div>
-            </details>
+            <div class="subbab-nav">
+                <button class="subbab-btn active" onclick="openSubBab(event, 'bab2-sub1', 'bab2')">🕌 1. Tarawih</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab2-sub2', 'bab2')">✨ 2. Witir</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab2-sub3', 'bab2')">🤲 3. Urutan & Fadhilah</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab2-sub4', 'bab2')">🎬 4. Video</button>
+            </div>
 
-            <details>
-                <summary>✨ 2. Shalat Witir (Penyempurna Malam)</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Shalat dengan jumlah rakaat ganjil ini adalah penutup ibadah malam kita. Pahalanya istimewa sekali!</div>
-                    <img src="https://i.ibb.co.com/qMsS5xy0/5.png" alt="Penyempurna malam">
-                    <img src="https://i.ibb.co.com/gbSvSwvL/6.png" alt="Pengertian Shalat Witir">
-                </div>
-            </details>
+            <div id="bab2-sub1" class="subbab-content active">
+                <div class="desc-text">Kenapa ya dinamakan shalat Tarawih? Kapan saja kita bisa mengerjakannya? Ayo kita cari tahu!</div>
+                <img src="https://i.ibb.co.com/PzTjqrrT/1.png" alt="Materi">
+                <img src="https://i.ibb.co.com/Y76jRjG3/2.png" alt="Pengertian Shalat Tarawih">
+                <img src="https://i.ibb.co.com/s9jG4rJQ/3.png" alt="Hukum dan waktu">
+                <img src="https://i.ibb.co.com/HfGM2BKq/4.png" alt="Jumlah rakaat">
+            </div>
 
-            <details>
-                <summary>🤲 3. Urutan & Fadhilah Keutamaan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Bagaimana sih urutan mengerjakannya? Dan apa hadiah dari Allah? Lihat di sini!</div>
-                    <img src="https://i.ibb.co.com/1GRY8dyK/7.png" alt="Urutan Shalat">
-                    <img src="https://i.ibb.co.com/N28Xvc7P/8.png" alt="Fadhilah">
-                </div>
-            </details>
+            <div id="bab2-sub2" class="subbab-content">
+                <div class="desc-text">Shalat dengan jumlah rakaat ganjil ini adalah penutup ibadah malam kita. Pahalanya istimewa sekali!</div>
+                <img src="https://i.ibb.co.com/qMsS5xy0/5.png" alt="Penyempurna malam">
+                <img src="https://i.ibb.co.com/gbSvSwvL/6.png" alt="Pengertian Shalat Witir">
+            </div>
 
-            <details>
-                <summary>🎬 4. Tonton Video Penjelasan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Tonton video ini untuk melihat betapa serunya shalat berjamaah di malam bulan Ramadhan.</div>
-                    <div class="iframe-container">
-                        <iframe src="https://www.youtube.com/embed/7ewEvRK4g10?si=RoOeLIiYNYA286_R" allowfullscreen></iframe>
-                    </div>
+            <div id="bab2-sub3" class="subbab-content">
+                <div class="desc-text">Bagaimana sih urutan mengerjakannya? Dan apa hadiah dari Allah? Lihat di sini!</div>
+                <img src="https://i.ibb.co.com/1GRY8dyK/7.png" alt="Urutan Shalat">
+                <img src="https://i.ibb.co.com/N28Xvc7P/8.png" alt="Fadhilah">
+            </div>
+
+            <div id="bab2-sub4" class="subbab-content">
+                <div class="desc-text">Tonton video ini untuk melihat betapa serunya shalat berjamaah di malam bulan Ramadhan.</div>
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/7ewEvRK4g10?si=RoOeLIiYNYA286_R" allowfullscreen></iframe>
                 </div>
-            </details>
+            </div>
 
             <div class="action-area">
+                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
                     <a href="https://gemini.google.com/share/d656a55be637" target="_blank" class="btn btn-game">🎮 Bintang Malam Tarawih</a>
-                    <span class="btn-desc">Kumpulkan bintang pahala dengan menyelesaikan tantangan!</span>
+                    <span class="btn-desc">Kumpulkan bintang pahala dengan tantangan asyik!</span>
                 </div>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdVKd8MJUAFuubOIx2c9NQ98yjbyhsjO9SJSAClCy7nkc7taA/viewform?usp=publish-editor" target="_blank" class="btn btn-quiz">📝 Juara Tarawih & Witir</a>
-                    <span class="btn-desc">Siapa yang paling tahu? Jawab kuisnya dan jadilah juara!</span>
+                    <span class="btn-desc">Jawab kuisnya dan jadilah juara shalat malam!</span>
                 </div>
             </div>
         </div>
 
         <div id="bab3" class="chapter-section">
-            <h2 class="chapter-title">🕌 BAB 3: Macam-macam Shalat Khusus</h2>
+            <h2 class="chapter-title">🕌 BAB 3: Kondisi Khusus Shalat</h2>
             <p class="chapter-desc">Agama Islam itu mudah banget! Kalau kita sedang sakit atau bepergian, Allah memberikan keringanan. Yuk pelajari caranya!</p>
             
-            <details>
-                <summary>🎒 1. Shalat Jamak & Qashar (Untuk Musafir)</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Kalau sedang bepergian jauh, shalat kita bisa digabung (Jamak) atau diringkas (Qashar). Seru, kan?</div>
-                    <img src="https://i.ibb.co.com/kg7qpqzn/macam-macam-shalat.png" alt="Materi">
-                    <img src="https://i.ibb.co.com/rKDwfDFP/macam-macam-shalat-1.png" alt="Pengertian">
-                    <img src="https://i.ibb.co.com/217jG4tD/macam-macam-shalat-2.png" alt="Kondisi shalat">
-                    <img src="https://i.ibb.co.com/MkXLWkcm/macam-macam-shalat-3.png" alt="Shalat jamak">
-                    <img src="https://i.ibb.co.com/21dzrwJs/macam-macam-shalat-4.png" alt="Shalat qashar">
-                    <img src="https://i.ibb.co.com/ym4WkbCV/macam-macam-shalat-5.png" alt="Shalat jamak qashar">
-                </div>
-            </details>
+            <div class="subbab-nav">
+                <button class="subbab-btn active" onclick="openSubBab(event, 'bab3-sub1', 'bab3')">🎒 1. Jamak & Qashar</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab3-sub2', 'bab3')">🚑 2. Sakit & Kendaraan</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab3-sub3', 'bab3')">🎬 3. Video</button>
+            </div>
 
-            <details>
-                <summary>🚑 2. Shalat Saat Sakit, Dalam Kendaraan & Tayamum</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Saat berbaring karena sakit atau di dalam kendaraan, kita tetap bisa shalat lho!</div>
-                    <img src="https://i.ibb.co.com/mr6DtVqV/macam-macam-shalat-6.png" alt="Saat sakit">
-                    <img src="https://i.ibb.co.com/TDfCycRQ/macam-macam-shalat-7.png" alt="Saat bahaya">
-                    <img src="https://i.ibb.co.com/mVrWbSKF/macam-macam-shalat-8.png" alt="Dalam kendaraan">
-                    <img src="https://i.ibb.co.com/BKd6s4dJ/macam-macam-shalat-9.png" alt="Tayamum">
-                    <img src="https://i.ibb.co.com/7xgVqmWy/macam-macam-shalat-10.png" alt="Ringkasan">
-                </div>
-            </details>
+            <div id="bab3-sub1" class="subbab-content active">
+                <div class="desc-text">Kalau sedang bepergian jauh, shalat kita bisa digabung (Jamak) atau diringkas (Qashar). Seru, kan?</div>
+                <img src="https://i.ibb.co.com/kg7qpqzn/macam-macam-shalat.png" alt="Materi">
+                <img src="https://i.ibb.co.com/rKDwfDFP/macam-macam-shalat-1.png" alt="Pengertian">
+                <img src="https://i.ibb.co.com/217jG4tD/macam-macam-shalat-2.png" alt="Kondisi shalat">
+                <img src="https://i.ibb.co.com/MkXLWkcm/macam-macam-shalat-3.png" alt="Shalat jamak">
+                <img src="https://i.ibb.co.com/21dzrwJs/macam-macam-shalat-4.png" alt="Shalat qashar">
+                <img src="https://i.ibb.co.com/ym4WkbCV/macam-macam-shalat-5.png" alt="Shalat jamak qashar">
+            </div>
 
-            <details>
-                <summary>🎬 3. Tonton Video Penjelasan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Mari saksikan video panduan langkah demi langkah shalat saat bepergian dan sakit.</div>
-                    <div class="iframe-container">
-                        <iframe src="https://www.youtube.com/embed/kc-5C-uV5Hk?si=UV5Qm6yKna65uH1T" allowfullscreen></iframe>
-                    </div>
+            <div id="bab3-sub2" class="subbab-content">
+                <div class="desc-text">Saat berbaring karena sakit atau di dalam kendaraan, kita tetap bisa shalat lho!</div>
+                <img src="https://i.ibb.co.com/mr6DtVqV/macam-macam-shalat-6.png" alt="Saat sakit">
+                <img src="https://i.ibb.co.com/TDfCycRQ/macam-macam-shalat-7.png" alt="Saat bahaya">
+                <img src="https://i.ibb.co.com/mVrWbSKF/macam-macam-shalat-8.png" alt="Dalam kendaraan">
+                <img src="https://i.ibb.co.com/BKd6s4dJ/macam-macam-shalat-9.png" alt="Tayamum">
+                <img src="https://i.ibb.co.com/7xgVqmWy/macam-macam-shalat-10.png" alt="Ringkasan">
+            </div>
+
+            <div id="bab3-sub3" class="subbab-content">
+                <div class="desc-text">Mari saksikan video panduan langkah demi langkah shalat saat bepergian dan sakit.</div>
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/kc-5C-uV5Hk?si=UV5Qm6yKna65uH1T" allowfullscreen></iframe>
                 </div>
-            </details>
+            </div>
 
             <div class="action-area">
+                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://gemini.google.com/share/a914411cb3c3" target="_blank" class="btn btn-game">🎮 Petualang Tangguh Beribadah</a>
-                    <span class="btn-desc">Selesaikan tantangan shalat di perjalanan dan saat sakit!</span>
+                    <a href="https://gemini.google.com/share/a914411cb3c3" target="_blank" class="btn btn-game">🎮 Petualang Tangguh</a>
+                    <span class="btn-desc">Bantu karakter selesaikan shalat di perjalanan!</span>
                 </div>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
                     <a href="https://forms.gle/vq3xXQ9xE69AtAnr6" target="_blank" class="btn btn-quiz">📝 Kuis Anak Sholeh Musafir</a>
-                    <span class="btn-desc">Uji pemahamanmu tentang shalat jamak dan qashar di sini!</span>
+                    <span class="btn-desc">Uji pemahaman tentang shalat jamak dan qashar!</span>
                 </div>
             </div>
         </div>
@@ -501,94 +501,88 @@
             <h2 class="chapter-title">🌅 BAB 4: Puasa Wajib / Ramadhan</h2>
             <p class="chapter-desc">Hore, bulan Ramadhan tiba! Di bulan ini kita wajib berpuasa sebulan penuh. Apa saja sih rahasia di balik puasa Ramadhan?</p>
             
-            <details>
-                <summary>📅 1. Pengertian & Waktu Pelaksanaan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Mulai terbit fajar sampai matahari terbenam kita tidak boleh makan dan minum. Yuk pelajari dasar-dasarnya!</div>
-                    <img src="https://i.ibb.co.com/21j4kCzB/1.png" alt="Materi">
-                    <img src="https://i.ibb.co.com/VFBKZ7M/2.png" alt="Pengertian">
-                    <img src="https://i.ibb.co.com/RLNXX1V/3.png" alt="Waktu Pelaksanaan">
-                </div>
-            </details>
+            <div class="subbab-nav">
+                <button class="subbab-btn active" onclick="openSubBab(event, 'bab4-sub1', 'bab4')">📅 1. Waktu Puasa</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab4-sub2', 'bab4')">🚫 2. Syarat & Batal</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab4-sub3', 'bab4')">🌟 3. Amalan Keutamaan</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab4-sub4', 'bab4')">🎬 4. Video</button>
+            </div>
 
-            <details>
-                <summary>🚫 2. Syarat, Rukun & Hal yang Membatalkan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Apa saja ya yang bikin puasa kita batal? Hati-hati, jangan sampai puasa kita sia-sia!</div>
-                    <img src="https://i.ibb.co.com/BH8x7Ybd/4.png" alt="Syarat dan Rukun">
-                    <img src="https://i.ibb.co.com/84zqnxWN/5.png" alt="Syarat Sah">
-                    <img src="https://i.ibb.co.com/1fwHPtZx/6.png" alt="Membatalkan Puasa">
-                </div>
-            </details>
+            <div id="bab4-sub1" class="subbab-content active">
+                <div class="desc-text">Mulai terbit fajar sampai matahari terbenam kita tidak boleh makan dan minum. Yuk pelajari dasar-dasarnya!</div>
+                <img src="https://i.ibb.co.com/21j4kCzB/1.png" alt="Materi">
+                <img src="https://i.ibb.co.com/VFBKZ7M/2.png" alt="Pengertian">
+                <img src="https://i.ibb.co.com/RLNXX1V/3.png" alt="Waktu Pelaksanaan">
+            </div>
 
-            <details>
-                <summary>🌟 3. Amalan & Keutamaan Ramadhan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Selain menahan lapar, kita juga harus banyak baca Al-Qur'an. Ada pintu surga khusus lho buat kita!</div>
-                    <img src="https://i.ibb.co.com/7J23QYHh/7.png" alt="Amalan">
-                    <img src="https://i.ibb.co.com/ccvT3t43/8.png" alt="Keutamaan">
-                    <img src="https://i.ibb.co.com/LXtPMvbX/9.png" alt="Ringkasan">
-                    <img src="https://i.ibb.co.com/ZzC9mpJC/10.png" alt="Penutup">
-                </div>
-            </details>
+            <div id="bab4-sub2" class="subbab-content">
+                <div class="desc-text">Apa saja ya yang bikin puasa kita batal? Hati-hati, jangan sampai puasa kita sia-sia!</div>
+                <img src="https://i.ibb.co.com/BH8x7Ybd/4.png" alt="Syarat dan Rukun">
+                <img src="https://i.ibb.co.com/84zqnxWN/5.png" alt="Syarat Sah">
+                <img src="https://i.ibb.co.com/1fwHPtZx/6.png" alt="Membatalkan Puasa">
+            </div>
 
-            <details>
-                <summary>🎬 4. Tonton Video Penjelasan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Tonton video penjelasan seru tentang amalan asyik di bulan suci Ramadhan.</div>
-                    <div class="iframe-container">
-                        <iframe src="https://www.youtube.com/embed/sjRd94ZaPSI?si=phfVYKiausayvNZH" allowfullscreen></iframe>
-                    </div>
+            <div id="bab4-sub3" class="subbab-content">
+                <div class="desc-text">Selain menahan lapar, kita juga harus banyak baca Al-Qur'an. Ada pintu surga khusus lho buat kita!</div>
+                <img src="https://i.ibb.co.com/7J23QYHh/7.png" alt="Amalan">
+                <img src="https://i.ibb.co.com/ccvT3t43/8.png" alt="Keutamaan">
+                <img src="https://i.ibb.co.com/LXtPMvbX/9.png" alt="Ringkasan">
+                <img src="https://i.ibb.co.com/ZzC9mpJC/10.png" alt="Penutup">
+            </div>
+
+            <div id="bab4-sub4" class="subbab-content">
+                <div class="desc-text">Tonton video penjelasan seru tentang amalan asyik di bulan suci Ramadhan.</div>
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/sjRd94ZaPSI?si=phfVYKiausayvNZH" allowfullscreen></iframe>
                 </div>
-            </details>
+            </div>
 
             <div class="action-area">
+                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://gemini.google.com/share/2c895827f036" target="_blank" class="btn btn-game">🎮 Pahlawan Ramadhan Penuh Berkah</a>
+                    <a href="https://gemini.google.com/share/2c895827f036" target="_blank" class="btn btn-game">🎮 Pahlawan Ramadhan</a>
                     <span class="btn-desc">Kumpulkan pahala puasa sebanyak-banyaknya di game ini!</span>
                 </div>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://forms.gle/bKigbdjehdzy4xgn7" target="_blank" class="btn btn-quiz">📝 Cerdas Cermat Anak Ramadhan</a>
+                    <a href="https://forms.gle/bKigbdjehdzy4xgn7" target="_blank" class="btn btn-quiz">📝 Cerdas Cermat Ramadhan</a>
                     <span class="btn-desc">Buktikan kamu adalah jagoan puasa Ramadhan!</span>
                 </div>
             </div>
         </div>
 
         <div id="bab5" class="chapter-section">
-            <h2 class="chapter-title">✨ BAB 5: Macam-Macam Puasa Sunnah</h2>
+            <h2 class="chapter-title">✨ BAB 5: Macam Puasa Sunnah</h2>
             <p class="chapter-desc">Ternyata puasa itu bukan cuma di bulan Ramadhan saja, lho! Nabi kita juga sering mengerjakan puasa sunnah.</p>
             
-            <details>
-                <summary>📊 1. Slide Presentasi Interaktif Puasa Sunnah</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Geser slide-slide keren ini untuk menemukan berbagai jenis puasa sunnah!</div>
-                    <div class="iframe-container">
-                        <iframe src="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view?embed" allowfullscreen></iframe>
-                    </div>
-                    <p style="margin-top:15px;"><a href="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view" target="_blank" style="color: var(--primary-dark); font-weight:bold;">Lihat Layar Penuh di Canva</a></p>
-                </div>
-            </details>
+            <div class="subbab-nav">
+                <button class="subbab-btn active" onclick="openSubBab(event, 'bab5-sub1', 'bab5')">📊 1. Slide Materi</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab5-sub2', 'bab5')">💡 2. Manfaat Puasa</button>
+                <button class="subbab-btn" onclick="openSubBab(event, 'bab5-sub3', 'bab5')">🎬 3. Video</button>
+            </div>
 
-            <details>
-                <summary>💡 2. Pengertian & Manfaat Puasa Sunnah</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Wah, ternyata puasa sunnah itu bikin tubuh kita makin sehat dan hati makin tenang!</div>
-                    <img src="https://i.ibb.co.com/RTWxfPC4/Chat-GPT-Image-May-18-2026-05-50-57-AM.png" alt="Macam Puasa Sunnah">
-                    <img src="https://i.ibb.co.com/q3x3cBzr/manfaat-puasa-sunah.png" alt="Manfaat">
+            <div id="bab5-sub1" class="subbab-content active">
+                <div class="desc-text">Geser slide-slide keren di bawah ini untuk menemukan berbagai jenis puasa sunnah!</div>
+                <div class="iframe-container">
+                    <iframe src="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view?embed" allowfullscreen></iframe>
                 </div>
-            </details>
+                <p style="margin-top:15px;"><a href="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view" target="_blank" style="color: var(--primary-dark); font-weight:bold;">Lihat Layar Penuh di Canva</a></p>
+            </div>
 
-            <details>
-                <summary>🎬 3. Tonton Video Penjelasan</summary>
-                <div class="sub-content">
-                    <div class="desc-text">Simak video penjelasan mengapa puasa sunnah sangat disukai oleh Rasulullah.</div>
-                    <div class="iframe-container">
-                        <iframe src="https://www.youtube.com/embed/e1jEjuLCMPA" allowfullscreen></iframe>
-                    </div>
+            <div id="bab5-sub2" class="subbab-content">
+                <div class="desc-text">Wah, ternyata puasa sunnah itu bikin tubuh kita makin sehat dan hati makin tenang!</div>
+                <img src="https://i.ibb.co.com/RTWxfPC4/Chat-GPT-Image-May-18-2026-05-50-57-AM.png" alt="Macam Puasa Sunnah">
+                <img src="https://i.ibb.co.com/q3x3cBzr/manfaat-puasa-sunah.png" alt="Manfaat">
+            </div>
+
+            <div id="bab5-sub3" class="subbab-content">
+                <div class="desc-text">Simak video penjelasan mengapa puasa sunnah sangat disukai oleh Rasulullah.</div>
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/e1jEjuLCMPA" allowfullscreen></iframe>
                 </div>
-            </details>
+            </div>
 
             <div class="action-area">
+                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
                 <div style="display:inline-block; max-width:300px; vertical-align:top;">
                     <a href="https://gemini.google.com/share/930f132ad4be" target="_blank" class="btn btn-game">🎮 Detektif Puasa Sunnah</a>
                     <span class="btn-desc">Ayo tebak-tebakan nama puasa sunnah berdasarkan cirinya!</span>
@@ -603,25 +597,43 @@
     </div>
 
     <script>
+        // Fungsi untuk Navigasi antar Halaman Utama / Bab
         function showView(viewId, element) {
-            // Sembunyikan semua halaman
             const sections = document.querySelectorAll('.chapter-section');
             sections.forEach(sec => sec.classList.remove('active'));
 
-            // Hapus status aktif dari semua menu sidebar
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
 
-            // Tampilkan halaman yang dipilih
             document.getElementById(viewId).classList.add('active');
             
-            // Tandai menu sidebar sebagai aktif
             if(element) {
                 element.classList.add('active');
             }
 
-            // Scroll mulus ke atas
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Fungsi Baru untuk Navigasi antar Sub-bab (Tab System)
+        function openSubBab(event, subbabId, chapterId) {
+            // Cari elemen Bab yang sedang aktif
+            const chapter = document.getElementById(chapterId);
+            
+            // Sembunyikan semua konten sub-bab di dalam Bab ini
+            const subContents = chapter.querySelectorAll('.subbab-content');
+            subContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Matikan warna (status aktif) dari semua tombol sub-bab di Bab ini
+            const subBtns = chapter.querySelectorAll('.subbab-btn');
+            subBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Tampilkan hanya sub-bab yang diklik dan nyalakan warna tombolnya
+            document.getElementById(subbabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
     </script>
 </body>
