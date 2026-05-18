@@ -3,153 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gen-Mu | Smart Fikih untuk GenMu</title>
+    <link rel="icon" href="https://i.ibb.co.com/nNKJsj7g/LOGO-GENMU.jpg" type="image/jpeg">
+    <title>Gen-Mu - Aplikasi Pembelajaran Fikih Interaktif</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav class="navbar fade-in">
-        <div class="logo">Gen-Mu</div>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="#hero">Beranda</a></li>
-            <li><a href="#masalah">Masalah</a></li>
-            <li><a href="#solusi">Solusi</a></li>
-            <li><a href="#fitur">Fitur</a></li>
-            <li><a href="#akses">Akses</a></li>
-            <li><a href="#tim">Tim</a></li>
-        </ul>
-    </nav>
-
-    <section id="hero" class="hero fade-in">
-        <div class="hero-content">
-            <h1>Gen-Mu</h1>
-            <h2>Smart Fikih untuk GenMu</h2>
-            <p>Gen-Mu adalah aplikasi pembelajaran Fikih berbasis Android yang dirancang untuk membantu siswa Madrasah Ibtidaiyah belajar dan memahami materi fikih seperti thaharah, sholat, zakat, qurban, haji, serta muamalah secara mandiri. Aplikasi ini hadir sebagai pelengkap pembelajaran di kelas, sehingga siswa dapat mengulang materi dan berlatih kapan saja. Konten mengacu pada kurikulum PAI Kementerian Agama RI untuk jenjang MI.</p>
-            <a href="#akses" class="btn btn-primary">Coba Sekarang</a>
-        </div>
-        <div class="hero-image">
-            <img src="https://i.ibb.co.com/1fDVcxxZ/Mockup-1.png" alt="Gambar Hero Aplikasi Gen-Mu">
-        </div>
-    </section>
-
-    <section id="masalah" class="masalah fade-in">
-        <h2 class="section-title">Kurangnya Media Pembelajaran Fikih yang Interaktif di MI</h2>
-        <p class="section-subtitle">Pembelajaran fikih di Madrasah Ibtidaiyah masih didominasi metode konvensional yang kurang menarik bagi siswa.</p>
-        
-        <div class="card-container">
-            <div class="card">
-                <h3>Keterbatasan Media</h3>
-                <p>Media pembelajaran yang digunakan masih terbatas pada buku teks dan ceramah.</p>
-            </div>
-            <div class="card">
-                <h3>Kurang Konkret</h3>
-                <p>Kurangnya media interaktif yang membantu siswa memahami praktik ibadah secara konkret.</p>
-            </div>
-            <div class="card">
-                <h3>Sulit Belajar Mandiri</h3>
-                <p>Siswa kesulitan mengulang materi dan belajar mandiri di luar kelas.</p>
-            </div>
-        </div>
-        <div class="target-pengguna">
-            <strong>Target Pengguna:</strong> Siswa Madrasah Ibtidaiyah (kelas 1–6) usia 7–12 tahun serta guru PAI sebagai pendukung pembelajaran.
-        </div>
-    </section>
-
-    <section id="solusi" class="solusi fade-in">
-        <div class="solusi-content">
-            <h2 class="section-title left-align">Gen-Mu: Aplikasi Pembelajaran Fikih Interaktif Berbasis Android</h2>
-            <p>Gen-Mu dirancang untuk membantu siswa MI memahami materi fikih secara lebih menarik, interaktif, dan fleksibel melalui media digital.</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <img src="https://i.ibb.co.com/nNKJsj7g/LOGO-GENMU.jpg" alt="Logo Gen-Mu" class="nav-logo">
+                <span>GEN-MU</span>
+            </a>
             
-            <h3>Cara Kerja Singkat:</h3>
-            <p>Buka aplikasi → pilih menu → pelajari materi via video & ringkasan → kerjakan game/kuis → dapatkan poin progres.</p>
-            
-            <h3>Manfaat:</h3>
-            <ul>
-                <li>Membantu siswa memahami materi fikih dengan lebih mudah dan menyenangkan.</li>
-                <li>Meningkatkan motivasi belajar melalui fitur game dan sistem poin.</li>
-                <li>Memudahkan siswa belajar kapan saja dan di mana saja.</li>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#beranda" class="nav-links">Beranda</a></li>
+                <li><a href="#tentang" class="nav-links">Tentang</a></li>
+                <li><a href="#fitur" class="nav-links">Fitur</a></li>
+                <li><a href="belajar.html" class="btn-nav">Mulai Belajar</a></li>
             </ul>
         </div>
-        <div class="solusi-image">
-            <img src="https://i.ibb.co.com/7tyzKcLX/Mockup.png" alt="Tampilan aplikasi Gen-Mu">
+    </nav>
+
+    <section id="beranda" class="hero">
+        <div class="hero-content fade-in">
+            <h1>Selamat Datang di <span>GEN-MU</span></h1>
+            <p>Gen-Mu merupakan aplikasi pembelajaran fikih interaktif untuk siswa kelas 3 Madrasah Ibtidaiyah yang berfokus pada materi shalat dan puasa. Belajar mandiri jadi lebih menyenangkan!</p>
+            <a href="belajar.html" class="btn-primary">Mulai Belajar Sekarang</a>
+        </div>
+        <div class="hero-image slide-in">
+            <img src="https://i.ibb.co.com/nNKJsj7g/LOGO-GENMU.jpg" alt="Ilustrasi Gen-Mu" class="hero-img-style">
         </div>
     </section>
 
-    <section id="fitur" class="fitur fade-in">
-        <h2 class="section-title">Fitur Gen-Mu</h2>
-        <p class="section-subtitle">Gen-Mu menyediakan fitur pembelajaran fikih interaktif yang sesuai kurikulum MI.</p>
-        
-        <div class="grid-container">
-            <div class="card">
-                <h3>Belajar</h3>
-                <p>Menyajikan materi fikih seperti thaharah, shalat, puasa, zakat, dalam bentuk ringkasan, video, dan audio.</p>
+    <section id="tentang" class="about">
+        <div class="about-container fade-in">
+            <h2>Tentang Gen-Mu</h2>
+            <p>Gen-Mu merupakan aplikasi pembelajaran fikih interaktif untuk siswa kelas 3 Madrasah Ibtidaiyah yang berfokus pada materi shalat dan puasa. Aplikasi ini membantu siswa belajar secara mandiri melalui materi sederhana, video pembelajaran, game edukasi, dan quiz interaktif sehingga pembelajaran menjadi lebih menyenangkan dan mudah dipahami.</p>
+        </div>
+    </section>
+
+    <section id="fitur" class="features">
+        <h2 class="text-center fade-in">Fitur Seru Gen-Mu</h2>
+        <div class="feature-grid">
+            <div class="feature-card fade-in">
+                <div class="icon">📖</div>
+                <h3>Materi Sederhana</h3>
+                <p>Materi shalat dan puasa yang dikemas dengan gambar dan bahasa yang mudah dipahami.</p>
             </div>
-            <div class="card">
+            <div class="feature-card fade-in">
+                <div class="icon">🎬</div>
+                <h3>Video Animasi</h3>
+                <p>Tonton video pembelajaran seru agar kamu makin cepat paham.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="icon">🎮</div>
                 <h3>Game Edukasi</h3>
-                <p>Menyediakan kuis dan permainan interaktif untuk menguji pemahaman siswa.</p>
+                <p>Bermain sambil belajar dengan game teka-teki interaktif yang menyenangkan.</p>
             </div>
-            <div class="card">
-                <h3>Ibadahku</h3>
-                <p>Berisi pengingat ibadah, doa harian, serta pembiasaan amalan sehari-hari.</p>
-            </div>
-            <div class="card">
-                <h3>Progres & Reward</h3>
-                <p>Menampilkan perkembangan belajar siswa serta sistem poin dan badge.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="akses" class="akses fade-in">
-        <h2 class="section-title">Akses Aplikasi Gen-Mu</h2>
-        <p>Aplikasi Gen-Mu dapat diakses melalui perangkat Android sebagai media pembelajaran fikih interaktif.</p>
-        <div class="btn-group">
-            <a href="belajar.html" class="btn btn-primary">Buka Halaman Pembelajaran</a>
-        </div>
-    </section>
-
-    <section id="tim" class="tim fade-in">
-        <h2 class="section-title">Tim Pengembang: An-Naba</h2>
-        <p class="section-subtitle">Tim pengembang aplikasi edukasi yang berfokus pada inovasi pembelajaran Pendidikan Agama Islam berbasis digital.</p>
-        
-        <div class="team-container">
-            <div class="team-card">
-                <img src="https://i.ibb.co.com/bgSdx4kd/Gambar-Whats-App-2025-11-27-pukul-20-53-47-1bafa72e-1.jpg" alt="Photo Profil Talitha">
-                <h3>Talitha Luthfiana Fikry</h3>
-                <p>Koordinator Pengembangan</p>
-            </div>
-            <div class="team-card">
-                <img src="https://i.ibb.co.com/99Jbgrx2/Whats-App-Image-2026-04-27-at-07-52-18.jpg" alt="Photo Profil Zackiy">
-                <h3>Ahmad Zackiy</h3>
-                <p>Desainer UI/UX</p>
-            </div>
-            <div class="team-card">
-                <img src="https://i.ibb.co.com/6R9L8zCX/Whats-App-Image-2026-04-27-at-07-54-19.jpg" alt="Photo Profil Agil">
-                <h3>Agil Salsa Nabila</h3>
-                <p>Perancang Game Edukasi</p>
-            </div>
-            <div class="team-card">
-                <img src="https://i.ibb.co.com/KxWQjw3b/Whats-App-Image-2026-04-20-at-08-06-09.jpg" alt="Photo Profil Fatsa">
-                <h3>Fathun Nissa’</h3>
-                <p>Penyusun Konten Materi</p>
-            </div>
-            <div class="team-card">
-                <img src="https://i.ibb.co.com/0yjbb5KD/Whats-App-Image-2026-04-20-at-08-09-34-1.jpg" alt="Photo Profil Adhi Faiz">
-                <h3>Adhi Faiz Fadillah</h3>
-                <p>Perancang Konsep Aplikasi</p>
+            <div class="feature-card fade-in">
+                <div class="icon">📝</div>
+                <h3>Quiz Interaktif</h3>
+                <p>Uji kemampuanmu setelah belajar dan jadilah juara di setiap babnya!</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <p><strong>Kelompok An-naba</strong></p>
-        <p>Kelas A, Pendidikan Agama Islam</p>
-        <p>Universitas Muhammadiyah Yogyakarta</p>
-        <p>&copy; 2026 Aplikasi Gen-Mu.</p>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="https://i.ibb.co.com/nNKJsj7g/LOGO-GENMU.jpg" alt="Logo Gen-Mu">
+                <h3>GEN-MU</h3>
+            </div>
+            <p>Aplikasi pembelajaran fikih interaktif untuk siswa kelas 3 Madrasah Ibtidaiyah.</p>
+            <p>&copy; 2026 GEN-MU. Dibuat dengan ❤️ untuk pendidikan Indonesia.</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>
