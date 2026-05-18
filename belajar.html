@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://i.ibb.co.com/nNKJsj7g/LOGO-GENMU.jpg" type="image/jpeg">
     <title>Ruang Belajar GEN-MU</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
@@ -22,9 +23,10 @@
             color: var(--text-dark);
             display: flex;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Navigasi Sidebar */
+        /* --- SIDEBAR RESPONSIVE & TOGGLE --- */
         .sidebar {
             width: 280px;
             background: white;
@@ -35,27 +37,35 @@
             height: 100vh;
             overflow-y: auto;
             border-right: 4px solid #C8E6C9;
-            z-index: 100;
+            z-index: 1000;
+            transition: transform 0.3s ease;
         }
 
+        /* Class untuk menyembunyikan sidebar (Toggle) */
+        .sidebar.collapsed { transform: translateX(-100%); }
+
         .sidebar-header {
-            padding: 25px 20px;
+            padding: 20px;
             background: linear-gradient(135deg, #4CAF50, #81C784);
             color: white;
             text-align: center;
-            font-size: 1.8rem;
-            font-weight: 700;
             border-bottom-right-radius: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             margin-bottom: 10px;
         }
-
-        .nav-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        
+        /* Logo Baru di Sidebar */
+        .sidebar-logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 2px solid white;
         }
 
+        .sidebar-header h2 { margin: 0; font-size: 1.5rem; }
+
+        .nav-menu { list-style: none; padding: 0; margin: 0; }
         .nav-item {
             padding: 15px 20px;
             margin: 8px 15px;
@@ -68,22 +78,66 @@
             align-items: center;
             gap: 10px;
         }
-
         .nav-item:hover, .nav-item.active {
             background-color: #C8E6C9;
             color: var(--primary-dark);
             transform: translateX(5px);
         }
 
-        /* Konten Utama */
+        /* --- KONTEN UTAMA --- */
         .main-content {
-            margin-left: 280px;
-            padding: 40px;
+            margin-left: 280px; /* Default margin untuk sidebar */
+            padding: 20px 40px 40px 40px;
             width: calc(100% - 280px);
             box-sizing: border-box;
+            transition: margin-left 0.3s ease, width 0.3s ease;
         }
 
-        /* Dashboard Utama */
+        /* Jika sidebar disembunyikan, konten meluas */
+        .main-content.expanded {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* --- TOMBOL NAVIGASI ATAS (TOGGLE & KEMBALI) --- */
+        .top-nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-toggle-sidebar {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+        .btn-toggle-sidebar:hover { background-color: var(--primary-dark); }
+
+        .btn-back-home {
+            background-color: #f1f2f6;
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: 0.2s;
+            border: 1px solid #ddd;
+        }
+        .btn-back-home:hover { background-color: #dfe4ea; }
+
+        /* Dashboard & Kartu Bab */
         .welcome-box {
             background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
             padding: 35px;
@@ -93,222 +147,90 @@
             margin-bottom: 40px;
             border: 4px dashed white;
         }
+        .welcome-box h1 { color: #FF5722; font-size: 2.5rem; margin: 0 0 15px 0; }
+        .welcome-box p { font-size: 1.2rem; color: #444; line-height: 1.6; }
 
-        .welcome-box h1 {
-            color: #FF5722;
-            font-size: 2.8rem;
-            margin: 0 0 15px 0;
-        }
-
-        .welcome-box p {
-            font-size: 1.3rem;
-            color: #444;
-            line-height: 1.6;
-        }
-
-        /* Kotak Bab di Halaman Utama */
-        .bab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
+        .bab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
         .bab-card {
-            padding: 35px 20px;
-            border-radius: 25px;
-            text-align: center;
-            cursor: pointer;
-            color: white;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            padding: 30px 15px; border-radius: 20px; text-align: center; cursor: pointer; color: white;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1); transition: all 0.3s;
             border: 3px solid rgba(255,255,255,0.5);
         }
-
-        .bab-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
-        }
-
-        .bab-card h3 { margin: 0; font-size: 1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-        .bab-card p { margin: 10px 0 0 0; font-size: 1.1rem; font-weight: 600; }
-
+        .bab-card:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(0,0,0,0.2); }
+        .bab-card h3 { margin: 0; font-size: 1.5rem; }
         .bg-1 { background: linear-gradient(135deg, #FF9A9E, #FECFEF); }
         .bg-2 { background: linear-gradient(135deg, #A18CD1, #FBC2EB); }
         .bg-3 { background: linear-gradient(135deg, #84FAB0, #8FD3F4); }
         .bg-4 { background: linear-gradient(135deg, #F6D365, #FDA085); }
         .bg-5 { background: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
 
-        /* Halaman Bab */
-        .chapter-section {
-            display: none;
-            background: white;
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            animation: fadeIn 0.4s ease;
-        }
+        /* Area Materi Bab */
+        .chapter-section { display: none; background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .chapter-section.active { display: block; animation: fadeIn 0.4s ease; }
+        .chapter-title { color: var(--primary-dark); font-size: 2rem; text-align: center; margin-top: 0; }
+        .chapter-desc { text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px dashed #eee; }
 
-        .chapter-section.active {
-            display: block;
-        }
-
-        .chapter-title {
-            color: var(--primary-dark);
-            font-size: 2.2rem;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        .chapter-desc {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px dashed #eee;
-        }
-
-        /* --- DESAIN BARU: Menu Tab Sub-Bab --- */
-        .subbab-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 25px;
-            justify-content: center;
-        }
-
+        /* Menu Tab Sub-Bab */
+        .subbab-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; justify-content: center; }
         .subbab-btn {
-            background-color: #FAFAFA;
-            border: 2px solid #E0E0E0;
-            border-radius: 50px;
-            padding: 12px 20px;
-            font-family: inherit;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            color: #666;
-            transition: all 0.3s;
+            background-color: #FAFAFA; border: 2px solid #E0E0E0; border-radius: 50px; padding: 10px 18px;
+            font-size: 1rem; font-weight: 700; cursor: pointer; color: #666; transition: 0.3s;
         }
+        .subbab-btn:hover { background-color: #FFF3E0; border-color: var(--accent); color: var(--accent); }
+        .subbab-btn.active { background-color: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3); transform: scale(1.05); }
 
-        .subbab-btn:hover {
-            background-color: #FFF3E0;
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .subbab-btn.active {
-            background-color: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
-            transform: scale(1.05);
-        }
-
-        /* Kotak Konten Sub-Bab yang Terpisah */
-        .subbab-content {
-            display: none;
-            padding: 30px;
-            background-color: #FAFAFA;
-            border: 2px solid #E0E0E0;
-            border-radius: 20px;
-            text-align: center;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .subbab-content.active {
-            display: block;
-        }
-
-        .desc-text {
-            background-color: #FFF9C4;
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            font-size: 1.2rem;
-            color: #333;
-            border-left: 6px solid #FFC107;
-            text-align: left;
-        }
-
-        .subbab-content img {
-            max-width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            margin: 10px;
-            transition: transform 0.3s;
-        }
-        .subbab-content img:hover { transform: scale(1.02); }
-
-        /* Video Iframe */
-        .iframe-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .iframe-container iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: 0;
-        }
-
-        /* Area Tombol Aksi (Game & Quiz) */
-        .action-area {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 25px;
-            border-top: 3px dashed #ddd;
-            background-color: #fcfcfc;
-            border-radius: 15px;
-        }
+        .subbab-content { display: none; padding: 25px; background-color: #FAFAFA; border: 2px solid #E0E0E0; border-radius: 20px; text-align: center; }
+        .subbab-content.active { display: block; animation: fadeIn 0.4s ease; }
         
-        .action-area h3 {
-            color: var(--primary-dark);
-            margin-top: 0;
-        }
+        .desc-text { background-color: #FFF9C4; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1rem; color: #333; border-left: 6px solid #FFC107; text-align: left; }
+        .subbab-content img { max-width: 100%; height: auto; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin: 10px 0; }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 3px solid rgba(255,255,255,0.3);
-        }
+        .iframe-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 15px; overflow: hidden; margin-top: 15px; }
+        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        .btn:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        /* Navigasi Next di Bawah Materi */
+        .bottom-nav { margin-top: 25px; text-align: right; }
+        .btn-next-materi {
+            background-color: var(--primary-dark); color: white; border: none; padding: 12px 20px;
+            border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
+        .btn-next-materi:hover { background-color: var(--primary); transform: translateX(5px); }
 
+        /* Area Game & Quiz */
+        .action-area { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 3px dashed #ddd; }
+        .btn-game, .btn-quiz { display: inline-block; padding: 12px 25px; border-radius: 50px; color: white; font-weight: 700; margin: 10px; text-decoration: none; transition: 0.3s; }
         .btn-game { background: linear-gradient(45deg, #FF512F, #F09819); }
         .btn-quiz { background: linear-gradient(45deg, #1CB5E0, #000851); }
-        .btn-desc { display: block; font-size: 0.95rem; font-weight: normal; margin-top: 5px; color: #555; }
+        .btn-game:hover, .btn-quiz:hover { transform: scale(1.05); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- MOBILE RESPONSIVE (max-width: 768px) --- */
+        @media (max-width: 768px) {
+            /* Sidebar disembunyikan secara default di HP */
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.mobile-open { transform: translateX(0); } /* Class jika sidebar dibuka di mobile */
+            
+            /* Main content memakan lebar penuh di HP */
+            .main-content { margin-left: 0; width: 100%; padding: 15px 20px; }
+            .main-content.expanded { margin-left: 0; }
+
+            .welcome-box h1 { font-size: 1.8rem; }
+            .chapter-title { font-size: 1.5rem; }
+            .subbab-btn { padding: 8px 12px; font-size: 0.9rem; }
+            
+            .btn-toggle-sidebar { font-size: 0.9rem; padding: 8px 12px; }
+            .btn-back-home { font-size: 0.9rem; padding: 8px 12px; }
         }
-
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-header">🌟 GEN-MU</div>
+    <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-header">
+            <img src="https://i.ibb.co.com/nNKJsj7g/LOGO-GENMU.jpg" alt="Logo Gen-Mu" class="sidebar-logo-img">
+            <h2>GEN-MU</h2>
+        </div>
         <ul class="nav-menu">
             <li class="nav-item active" onclick="showView('home', this)">🏠 Halaman Utama</li>
             <li class="nav-item" onclick="showView('bab1', this)">📖 BAB 1: Rawatib</li>
@@ -319,12 +241,17 @@
         </ul>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
+        
+        <div class="top-nav-bar">
+            <button class="btn-toggle-sidebar" id="toggleBtn">☰ Menu Materi</button>
+            <a href="index.html" class="btn-back-home">← Kembali ke Beranda</a>
+        </div>
 
         <div id="home" class="chapter-section active">
             <div class="welcome-box">
                 <h1>Halo Sahabat Hebat GEN-MU! 👋</h1>
-                <p>Selamat datang di Ruang Belajar yang super seru! 🚀<br>Di sini kita akan bertualang menimba ilmu agama yang akan membuat kita makin disayang Allah. Ada banyak gambar menarik, video seru, dan permainan asyik yang menunggumu. Yuk, pilih petualangan belajarmu hari ini!</p>
+                <p>Gen-Mu hadir untuk membantu kamu siswa kelas 3 MI belajar fikih shalat dan puasa dengan cara yang menyenangkan. Ada banyak gambar, video seru, dan permainan asyik yang menunggumu. Yuk, pilih materinya!</p>
             </div>
             
             <div class="bab-grid">
@@ -338,302 +265,266 @@
                     <h3>🕌 BAB 3</h3><p>Kondisi Shalat Khusus</p>
                 </div>
                 <div class="bab-card bg-4" onclick="document.querySelectorAll('.nav-item')[4].click()">
-                    <h3>🌅 BAB 4</h3><p>Puasa Wajib/Ramadhan</p>
+                    <h3>🌅 BAB 4</h3><p>Puasa Wajib</p>
                 </div>
                 <div class="bab-card bg-5" onclick="document.querySelectorAll('.nav-item')[5].click()">
-                    <h3>✨ BAB 5</h3><p>Macam Puasa Sunnah</p>
+                    <h3>✨ BAB 5</h3><p>Puasa Sunnah</p>
                 </div>
             </div>
         </div>
 
         <div id="bab1" class="chapter-section">
             <h2 class="chapter-title">📖 BAB 1: Sunnah Rawatib</h2>
-            <p class="chapter-desc">Pernahkah kamu mendengar tentang shalat pengawal? Ya, Shalat Rawatib adalah shalat sunnah yang menemani shalat fardhu kita. Yuk, cari tahu rahasia kehebatannya!</p>
+            <p class="chapter-desc">Shalat Rawatib adalah shalat sunnah pengawal yang menemani shalat fardhu kita. Yuk pelajari!</p>
             
             <div class="subbab-nav">
-                <button class="subbab-btn active" onclick="openSubBab(event, 'bab1-sub1', 'bab1')">📚 1. Pengertian</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab1-sub2', 'bab1')">⏰ 2. Waktu & Rakaat</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab1-sub3', 'bab1')">🌟 3. Manfaat & Cara</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab1-sub4', 'bab1')">🎬 4. Video</button>
+                <button class="subbab-btn active" id="btn-b1-s1" onclick="openSubBab('bab1-sub1', 'bab1', 'btn-b1-s1')">📚 1. Pengertian</button>
+                <button class="subbab-btn" id="btn-b1-s2" onclick="openSubBab('bab1-sub2', 'bab1', 'btn-b1-s2')">⏰ 2. Waktu & Rakaat</button>
+                <button class="subbab-btn" id="btn-b1-s3" onclick="openSubBab('bab1-sub3', 'bab1', 'btn-b1-s3')">🌟 3. Manfaat</button>
+                <button class="subbab-btn" id="btn-b1-s4" onclick="openSubBab('bab1-sub4', 'bab1', 'btn-b1-s4')">🎬 4. Video</button>
             </div>
 
             <div id="bab1-sub1" class="subbab-content active">
-                <div class="desc-text">Apa sih Sholat Rawatib itu? Dan kenapa kita dianjurkan mengerjakannya? Yuk lihat gambar ini untuk tahu jawabannya!</div>
+                <div class="desc-text">Apa sih Sholat Rawatib itu? Yuk lihat gambar ini untuk tahu jawabannya!</div>
                 <img src="https://i.ibb.co.com/bjLy00SD/1.png" alt="Materi 1">
-                <img src="https://i.ibb.co.com/tMqqQ2B3/2.png" alt="Pengertian Sholat Rawatib">
-                <img src="https://i.ibb.co.com/0RJmTRHN/3.png" alt="Fungsi sholat rawatib">
+                <img src="https://i.ibb.co.com/tMqqQ2B3/2.png" alt="Pengertian">
+                <img src="https://i.ibb.co.com/0RJmTRHN/3.png" alt="Fungsi">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab1-sub2', 'bab1', 'btn-b1-s2')">Materi Selanjutnya →</button></div>
             </div>
 
             <div id="bab1-sub2" class="subbab-content">
-                <div class="desc-text">Shalat ini ada yang dikerjakan sebelum (Qabliyah) dan sesudah (Ba'diyah) shalat wajib, lho. Jangan sampai tertukar, ya!</div>
+                <div class="desc-text">Shalat ini ada Qabliyah (sebelum) dan Ba'diyah (sesudah) shalat wajib. Jangan tertukar ya!</div>
                 <img src="https://i.ibb.co.com/svcGMx2N/4.png" alt="Waktu qabliyah">
                 <img src="https://i.ibb.co.com/WNx2Nj4D/5.png" alt="Waktu ba’diyah">
                 <img src="https://i.ibb.co.com/BVxQyyqM/6.png" alt="Jumlah rakaat">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab1-sub3', 'bab1', 'btn-b1-s3')">Materi Selanjutnya →</button></div>
             </div>
 
             <div id="bab1-sub3" class="subbab-content">
-                <div class="desc-text">Wah, ternyata manfaatnya luar biasa banget, bisa dibangunkan rumah di surga! Ikuti panduan praktis ini ya.</div>
+                <div class="desc-text">Wah, manfaatnya luar biasa banget, bisa dibangunkan rumah di surga!</div>
                 <img src="https://i.ibb.co.com/RpjzxMMG/7.png" alt="Manfaat">
                 <img src="https://i.ibb.co.com/HpGpZwFJ/8.png" alt="Cara mengerjakan">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab1-sub4', 'bab1', 'btn-b1-s4')">Tonton Video →</button></div>
             </div>
 
             <div id="bab1-sub4" class="subbab-content">
-                <div class="desc-text">Yuk, tonton video animasi seru ini supaya kamu makin paham cara dan keutamaan shalat Rawatib!</div>
+                <div class="desc-text">Yuk, tonton video animasi seru ini supaya kamu makin paham!</div>
                 <div class="iframe-container">
-                    <iframe src="https://www.youtube.com/embed/7o30T9-NYI4?si=um2XhuEr7gB6WeKc" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/7o30T9-NYI4" allowfullscreen></iframe>
+                </div>
+                <div class="bottom-nav">
+                    <button class="btn-next-materi" onclick="document.querySelectorAll('.nav-item')[2].click()">Lanjut ke BAB 2 →</button>
                 </div>
             </div>
 
             <div class="action-area">
-                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://gemini.google.com/share/a2b81728db79" target="_blank" class="btn btn-game">🎮 Teka-Teki Pasukan Rawatib</a>
-                    <span class="btn-desc">Uji daya ingatmu! Cocokkan waktu dan rakaat.</span>
-                </div>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://forms.gle/naRSzzyEVoJLH29X8" target="_blank" class="btn btn-quiz">📝 Misi Cerdas Rawatib</a>
-                    <span class="btn-desc">Buktikan kalau kamu sudah ahli tentang Shalat Rawatib!</span>
-                </div>
+                <a href="https://gemini.google.com/share/a2b81728db79" target="_blank" class="btn-game">🎮 Teka-Teki Rawatib</a>
+                <a href="https://forms.gle/naRSzzyEVoJLH29X8" target="_blank" class="btn-quiz">📝 Misi Kuis Rawatib</a>
             </div>
         </div>
 
         <div id="bab2" class="chapter-section">
             <h2 class="chapter-title">🌙 BAB 2: Shalat Malam Hari</h2>
-            <p class="chapter-desc">Malam hari bukan cuma untuk tidur, lho! Di bulan Ramadhan, ada shalat malam yang pahalanya berlimpah. Mari kita kenalan dengan Tarawih dan Witir!</p>
+            <p class="chapter-desc">Malam hari di bulan Ramadhan ada shalat yang pahalanya berlimpah. Mari kenalan dengan Tarawih dan Witir!</p>
             
             <div class="subbab-nav">
-                <button class="subbab-btn active" onclick="openSubBab(event, 'bab2-sub1', 'bab2')">🕌 1. Tarawih</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab2-sub2', 'bab2')">✨ 2. Witir</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab2-sub3', 'bab2')">🤲 3. Urutan & Fadhilah</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab2-sub4', 'bab2')">🎬 4. Video</button>
+                <button class="subbab-btn active" id="btn-b2-s1" onclick="openSubBab('bab2-sub1', 'bab2', 'btn-b2-s1')">🕌 1. Tarawih</button>
+                <button class="subbab-btn" id="btn-b2-s2" onclick="openSubBab('bab2-sub2', 'bab2', 'btn-b2-s2')">✨ 2. Witir</button>
+                <button class="subbab-btn" id="btn-b2-s3" onclick="openSubBab('bab2-sub3', 'bab2', 'btn-b2-s3')">🎬 3. Video</button>
             </div>
 
             <div id="bab2-sub1" class="subbab-content active">
-                <div class="desc-text">Kenapa ya dinamakan shalat Tarawih? Kapan saja kita bisa mengerjakannya? Ayo kita cari tahu!</div>
+                <div class="desc-text">Kapan saja kita bisa mengerjakan Tarawih? Ayo kita cari tahu!</div>
                 <img src="https://i.ibb.co.com/PzTjqrrT/1.png" alt="Materi">
-                <img src="https://i.ibb.co.com/Y76jRjG3/2.png" alt="Pengertian Shalat Tarawih">
-                <img src="https://i.ibb.co.com/s9jG4rJQ/3.png" alt="Hukum dan waktu">
+                <img src="https://i.ibb.co.com/Y76jRjG3/2.png" alt="Pengertian">
+                <img src="https://i.ibb.co.com/s9jG4rJQ/3.png" alt="Hukum">
                 <img src="https://i.ibb.co.com/HfGM2BKq/4.png" alt="Jumlah rakaat">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab2-sub2', 'bab2', 'btn-b2-s2')">Materi Selanjutnya →</button></div>
             </div>
 
             <div id="bab2-sub2" class="subbab-content">
-                <div class="desc-text">Shalat dengan jumlah rakaat ganjil ini adalah penutup ibadah malam kita. Pahalanya istimewa sekali!</div>
-                <img src="https://i.ibb.co.com/qMsS5xy0/5.png" alt="Penyempurna malam">
-                <img src="https://i.ibb.co.com/gbSvSwvL/6.png" alt="Pengertian Shalat Witir">
+                <div class="desc-text">Witir adalah penyempurna malam. Pahalanya istimewa sekali lho!</div>
+                <img src="https://i.ibb.co.com/qMsS5xy0/5.png" alt="Penyempurna">
+                <img src="https://i.ibb.co.com/gbSvSwvL/6.png" alt="Witir">
+                <img src="https://i.ibb.co.com/1GRY8dyK/7.png" alt="Urutan">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab2-sub3', 'bab2', 'btn-b2-s3')">Tonton Video →</button></div>
             </div>
 
             <div id="bab2-sub3" class="subbab-content">
-                <div class="desc-text">Bagaimana sih urutan mengerjakannya? Dan apa hadiah dari Allah? Lihat di sini!</div>
-                <img src="https://i.ibb.co.com/1GRY8dyK/7.png" alt="Urutan Shalat">
-                <img src="https://i.ibb.co.com/N28Xvc7P/8.png" alt="Fadhilah">
-            </div>
-
-            <div id="bab2-sub4" class="subbab-content">
-                <div class="desc-text">Tonton video ini untuk melihat betapa serunya shalat berjamaah di malam bulan Ramadhan.</div>
-                <div class="iframe-container">
-                    <iframe src="https://www.youtube.com/embed/7ewEvRK4g10?si=RoOeLIiYNYA286_R" allowfullscreen></iframe>
-                </div>
+                <div class="desc-text">Tonton video ini untuk melihat serunya shalat berjamaah di malam Ramadhan.</div>
+                <div class="iframe-container"><iframe src="https://www.youtube.com/embed/7ewEvRK4g10" allowfullscreen></iframe></div>
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="document.querySelectorAll('.nav-item')[3].click()">Lanjut ke BAB 3 →</button></div>
             </div>
 
             <div class="action-area">
-                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://gemini.google.com/share/d656a55be637" target="_blank" class="btn btn-game">🎮 Bintang Malam Tarawih</a>
-                    <span class="btn-desc">Kumpulkan bintang pahala dengan tantangan asyik!</span>
-                </div>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdVKd8MJUAFuubOIx2c9NQ98yjbyhsjO9SJSAClCy7nkc7taA/viewform?usp=publish-editor" target="_blank" class="btn btn-quiz">📝 Juara Tarawih & Witir</a>
-                    <span class="btn-desc">Jawab kuisnya dan jadilah juara shalat malam!</span>
-                </div>
+                <a href="https://gemini.google.com/share/d656a55be637" target="_blank" class="btn-game">🎮 Bintang Tarawih</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdVKd8MJUAFuubOIx2c9NQ98yjbyhsjO9SJSAClCy7nkc7taA/viewform" target="_blank" class="btn-quiz">📝 Kuis Shalat Malam</a>
             </div>
         </div>
 
         <div id="bab3" class="chapter-section">
             <h2 class="chapter-title">🕌 BAB 3: Kondisi Khusus Shalat</h2>
-            <p class="chapter-desc">Agama Islam itu mudah banget! Kalau kita sedang sakit atau bepergian, Allah memberikan keringanan. Yuk pelajari caranya!</p>
+            <p class="chapter-desc">Kalau kita sedang sakit atau bepergian, Allah memberikan keringanan shalat.</p>
             
             <div class="subbab-nav">
-                <button class="subbab-btn active" onclick="openSubBab(event, 'bab3-sub1', 'bab3')">🎒 1. Jamak & Qashar</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab3-sub2', 'bab3')">🚑 2. Sakit & Kendaraan</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab3-sub3', 'bab3')">🎬 3. Video</button>
+                <button class="subbab-btn active" id="btn-b3-s1" onclick="openSubBab('bab3-sub1', 'bab3', 'btn-b3-s1')">🎒 1. Jamak & Qashar</button>
+                <button class="subbab-btn" id="btn-b3-s2" onclick="openSubBab('bab3-sub2', 'bab3', 'btn-b3-s2')">🚑 2. Sakit & Kendaraan</button>
+                <button class="subbab-btn" id="btn-b3-s3" onclick="openSubBab('bab3-sub3', 'bab3', 'btn-b3-s3')">🎬 3. Video</button>
             </div>
 
             <div id="bab3-sub1" class="subbab-content active">
-                <div class="desc-text">Kalau sedang bepergian jauh, shalat kita bisa digabung (Jamak) atau diringkas (Qashar). Seru, kan?</div>
+                <div class="desc-text">Kalau bepergian jauh, shalat kita bisa digabung (Jamak) atau diringkas (Qashar).</div>
                 <img src="https://i.ibb.co.com/kg7qpqzn/macam-macam-shalat.png" alt="Materi">
                 <img src="https://i.ibb.co.com/rKDwfDFP/macam-macam-shalat-1.png" alt="Pengertian">
-                <img src="https://i.ibb.co.com/217jG4tD/macam-macam-shalat-2.png" alt="Kondisi shalat">
-                <img src="https://i.ibb.co.com/MkXLWkcm/macam-macam-shalat-3.png" alt="Shalat jamak">
-                <img src="https://i.ibb.co.com/21dzrwJs/macam-macam-shalat-4.png" alt="Shalat qashar">
-                <img src="https://i.ibb.co.com/ym4WkbCV/macam-macam-shalat-5.png" alt="Shalat jamak qashar">
+                <img src="https://i.ibb.co.com/217jG4tD/macam-macam-shalat-2.png" alt="Kondisi">
+                <img src="https://i.ibb.co.com/MkXLWkcm/macam-macam-shalat-3.png" alt="Jamak">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab3-sub2', 'bab3', 'btn-b3-s2')">Materi Selanjutnya →</button></div>
             </div>
 
             <div id="bab3-sub2" class="subbab-content">
-                <div class="desc-text">Saat berbaring karena sakit atau di dalam kendaraan, kita tetap bisa shalat lho!</div>
-                <img src="https://i.ibb.co.com/mr6DtVqV/macam-macam-shalat-6.png" alt="Saat sakit">
-                <img src="https://i.ibb.co.com/TDfCycRQ/macam-macam-shalat-7.png" alt="Saat bahaya">
-                <img src="https://i.ibb.co.com/mVrWbSKF/macam-macam-shalat-8.png" alt="Dalam kendaraan">
-                <img src="https://i.ibb.co.com/BKd6s4dJ/macam-macam-shalat-9.png" alt="Tayamum">
-                <img src="https://i.ibb.co.com/7xgVqmWy/macam-macam-shalat-10.png" alt="Ringkasan">
+                <div class="desc-text">Saat sakit atau di kendaraan, kita tetap bisa shalat lho!</div>
+                <img src="https://i.ibb.co.com/mr6DtVqV/macam-macam-shalat-6.png" alt="Sakit">
+                <img src="https://i.ibb.co.com/TDfCycRQ/macam-macam-shalat-7.png" alt="Bahaya">
+                <img src="https://i.ibb.co.com/mVrWbSKF/macam-macam-shalat-8.png" alt="Kendaraan">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab3-sub3', 'bab3', 'btn-b3-s3')">Tonton Video →</button></div>
             </div>
 
             <div id="bab3-sub3" class="subbab-content">
-                <div class="desc-text">Mari saksikan video panduan langkah demi langkah shalat saat bepergian dan sakit.</div>
-                <div class="iframe-container">
-                    <iframe src="https://www.youtube.com/embed/kc-5C-uV5Hk?si=UV5Qm6yKna65uH1T" allowfullscreen></iframe>
-                </div>
+                <div class="desc-text">Mari saksikan panduan shalat saat bepergian dan sakit.</div>
+                <div class="iframe-container"><iframe src="https://www.youtube.com/embed/kc-5C-uV5Hk" allowfullscreen></iframe></div>
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="document.querySelectorAll('.nav-item')[4].click()">Lanjut ke BAB 4 →</button></div>
             </div>
 
             <div class="action-area">
-                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://gemini.google.com/share/a914411cb3c3" target="_blank" class="btn btn-game">🎮 Petualang Tangguh</a>
-                    <span class="btn-desc">Bantu karakter selesaikan shalat di perjalanan!</span>
-                </div>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://forms.gle/vq3xXQ9xE69AtAnr6" target="_blank" class="btn btn-quiz">📝 Kuis Anak Sholeh Musafir</a>
-                    <span class="btn-desc">Uji pemahaman tentang shalat jamak dan qashar!</span>
-                </div>
+                <a href="https://gemini.google.com/share/a914411cb3c3" target="_blank" class="btn-game">🎮 Petualang Tangguh</a>
+                <a href="https://forms.gle/vq3xXQ9xE69AtAnr6" target="_blank" class="btn-quiz">📝 Kuis Anak Musafir</a>
             </div>
         </div>
 
         <div id="bab4" class="chapter-section">
             <h2 class="chapter-title">🌅 BAB 4: Puasa Wajib / Ramadhan</h2>
-            <p class="chapter-desc">Hore, bulan Ramadhan tiba! Di bulan ini kita wajib berpuasa sebulan penuh. Apa saja sih rahasia di balik puasa Ramadhan?</p>
+            <p class="chapter-desc">Bulan Ramadhan tiba! Kita wajib berpuasa sebulan penuh. Apa saja aturannya?</p>
             
             <div class="subbab-nav">
-                <button class="subbab-btn active" onclick="openSubBab(event, 'bab4-sub1', 'bab4')">📅 1. Waktu Puasa</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab4-sub2', 'bab4')">🚫 2. Syarat & Batal</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab4-sub3', 'bab4')">🌟 3. Amalan Keutamaan</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab4-sub4', 'bab4')">🎬 4. Video</button>
+                <button class="subbab-btn active" id="btn-b4-s1" onclick="openSubBab('bab4-sub1', 'bab4', 'btn-b4-s1')">📅 1. Syarat & Waktu</button>
+                <button class="subbab-btn" id="btn-b4-s2" onclick="openSubBab('bab4-sub2', 'bab4', 'btn-b4-s2')">🌟 2. Keutamaan</button>
+                <button class="subbab-btn" id="btn-b4-s3" onclick="openSubBab('bab4-sub3', 'bab4', 'btn-b4-s3')">🎬 3. Video</button>
             </div>
 
             <div id="bab4-sub1" class="subbab-content active">
-                <div class="desc-text">Mulai terbit fajar sampai matahari terbenam kita tidak boleh makan dan minum. Yuk pelajari dasar-dasarnya!</div>
+                <div class="desc-text">Mulai terbit fajar sampai terbenam matahari, perhatikan hal yang membatalkan puasa.</div>
                 <img src="https://i.ibb.co.com/21j4kCzB/1.png" alt="Materi">
-                <img src="https://i.ibb.co.com/VFBKZ7M/2.png" alt="Pengertian">
-                <img src="https://i.ibb.co.com/RLNXX1V/3.png" alt="Waktu Pelaksanaan">
+                <img src="https://i.ibb.co.com/BH8x7Ybd/4.png" alt="Syarat">
+                <img src="https://i.ibb.co.com/1fwHPtZx/6.png" alt="Batal">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab4-sub2', 'bab4', 'btn-b4-s2')">Materi Selanjutnya →</button></div>
             </div>
 
             <div id="bab4-sub2" class="subbab-content">
-                <div class="desc-text">Apa saja ya yang bikin puasa kita batal? Hati-hati, jangan sampai puasa kita sia-sia!</div>
-                <img src="https://i.ibb.co.com/BH8x7Ybd/4.png" alt="Syarat dan Rukun">
-                <img src="https://i.ibb.co.com/84zqnxWN/5.png" alt="Syarat Sah">
-                <img src="https://i.ibb.co.com/1fwHPtZx/6.png" alt="Membatalkan Puasa">
+                <div class="desc-text">Ada pintu surga khusus bernama Ar-Rayyan untuk orang yang berpuasa!</div>
+                <img src="https://i.ibb.co.com/7J23QYHh/7.png" alt="Amalan">
+                <img src="https://i.ibb.co.com/ccvT3t43/8.png" alt="Keutamaan">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab4-sub3', 'bab4', 'btn-b4-s3')">Tonton Video →</button></div>
             </div>
 
             <div id="bab4-sub3" class="subbab-content">
-                <div class="desc-text">Selain menahan lapar, kita juga harus banyak baca Al-Qur'an. Ada pintu surga khusus lho buat kita!</div>
-                <img src="https://i.ibb.co.com/7J23QYHh/7.png" alt="Amalan">
-                <img src="https://i.ibb.co.com/ccvT3t43/8.png" alt="Keutamaan">
-                <img src="https://i.ibb.co.com/LXtPMvbX/9.png" alt="Ringkasan">
-                <img src="https://i.ibb.co.com/ZzC9mpJC/10.png" alt="Penutup">
-            </div>
-
-            <div id="bab4-sub4" class="subbab-content">
-                <div class="desc-text">Tonton video penjelasan seru tentang amalan asyik di bulan suci Ramadhan.</div>
-                <div class="iframe-container">
-                    <iframe src="https://www.youtube.com/embed/sjRd94ZaPSI?si=phfVYKiausayvNZH" allowfullscreen></iframe>
-                </div>
+                <div class="desc-text">Tonton video penjelasan seru tentang puasa Ramadhan.</div>
+                <div class="iframe-container"><iframe src="https://www.youtube.com/embed/sjRd94ZaPSI" allowfullscreen></iframe></div>
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="document.querySelectorAll('.nav-item')[5].click()">Lanjut ke BAB 5 →</button></div>
             </div>
 
             <div class="action-area">
-                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://gemini.google.com/share/2c895827f036" target="_blank" class="btn btn-game">🎮 Pahlawan Ramadhan</a>
-                    <span class="btn-desc">Kumpulkan pahala puasa sebanyak-banyaknya di game ini!</span>
-                </div>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://forms.gle/bKigbdjehdzy4xgn7" target="_blank" class="btn btn-quiz">📝 Cerdas Cermat Ramadhan</a>
-                    <span class="btn-desc">Buktikan kamu adalah jagoan puasa Ramadhan!</span>
-                </div>
+                <a href="https://gemini.google.com/share/2c895827f036" target="_blank" class="btn-game">🎮 Pahlawan Ramadhan</a>
+                <a href="https://forms.gle/bKigbdjehdzy4xgn7" target="_blank" class="btn-quiz">📝 Kuis Cerdas Puasa</a>
             </div>
         </div>
 
         <div id="bab5" class="chapter-section">
-            <h2 class="chapter-title">✨ BAB 5: Macam Puasa Sunnah</h2>
-            <p class="chapter-desc">Ternyata puasa itu bukan cuma di bulan Ramadhan saja, lho! Nabi kita juga sering mengerjakan puasa sunnah.</p>
+            <h2 class="chapter-title">✨ BAB 5: Puasa Sunnah</h2>
+            <p class="chapter-desc">Bukan cuma Ramadhan, Nabi kita juga sering mengerjakan puasa sunnah lho!</p>
             
             <div class="subbab-nav">
-                <button class="subbab-btn active" onclick="openSubBab(event, 'bab5-sub1', 'bab5')">📊 1. Slide Materi</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab5-sub2', 'bab5')">💡 2. Manfaat Puasa</button>
-                <button class="subbab-btn" onclick="openSubBab(event, 'bab5-sub3', 'bab5')">🎬 3. Video</button>
+                <button class="subbab-btn active" id="btn-b5-s1" onclick="openSubBab('bab5-sub1', 'bab5', 'btn-b5-s1')">📊 1. Slide & Manfaat</button>
+                <button class="subbab-btn" id="btn-b5-s2" onclick="openSubBab('bab5-sub2', 'bab5', 'btn-b5-s2')">🎬 2. Video</button>
             </div>
 
             <div id="bab5-sub1" class="subbab-content active">
-                <div class="desc-text">Geser slide-slide keren di bawah ini untuk menemukan berbagai jenis puasa sunnah!</div>
-                <div class="iframe-container">
-                    <iframe src="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view?embed" allowfullscreen></iframe>
-                </div>
-                <p style="margin-top:15px;"><a href="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view" target="_blank" style="color: var(--primary-dark); font-weight:bold;">Lihat Layar Penuh di Canva</a></p>
+                <div class="desc-text">Geser slide ini untuk tahu macam-macam puasa sunnah dan manfaat kesehatannya!</div>
+                <div class="iframe-container"><iframe src="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view?embed" allowfullscreen></iframe></div>
+                <img src="https://i.ibb.co.com/q3x3cBzr/manfaat-puasa-sunah.png" alt="Manfaat" style="margin-top:20px;">
+                <div class="bottom-nav"><button class="btn-next-materi" onclick="openSubBab('bab5-sub2', 'bab5', 'btn-b5-s2')">Tonton Video →</button></div>
             </div>
 
             <div id="bab5-sub2" class="subbab-content">
-                <div class="desc-text">Wah, ternyata puasa sunnah itu bikin tubuh kita makin sehat dan hati makin tenang!</div>
-                <img src="https://i.ibb.co.com/RTWxfPC4/Chat-GPT-Image-May-18-2026-05-50-57-AM.png" alt="Macam Puasa Sunnah">
-                <img src="https://i.ibb.co.com/q3x3cBzr/manfaat-puasa-sunah.png" alt="Manfaat">
-            </div>
-
-            <div id="bab5-sub3" class="subbab-content">
-                <div class="desc-text">Simak video penjelasan mengapa puasa sunnah sangat disukai oleh Rasulullah.</div>
-                <div class="iframe-container">
-                    <iframe src="https://www.youtube.com/embed/e1jEjuLCMPA" allowfullscreen></iframe>
-                </div>
+                <div class="desc-text">Simak penjelasan mengapa puasa sunnah disukai Rasulullah.</div>
+                <div class="iframe-container"><iframe src="https://www.youtube.com/embed/e1jEjuLCMPA" allowfullscreen></iframe></div>
+                <div class="bottom-nav"><button class="btn-next-materi" style="background:#81C784;" onclick="alert('Selamat! Kamu telah menyelesaikan semua materi.')">🎉 Selesai Belajar!</button></div>
             </div>
 
             <div class="action-area">
-                <h3>Selesai Belajar Materi? Yuk Uji Pengetahuanmu!</h3>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://gemini.google.com/share/930f132ad4be" target="_blank" class="btn btn-game">🎮 Detektif Puasa Sunnah</a>
-                    <span class="btn-desc">Ayo tebak-tebakan nama puasa sunnah berdasarkan cirinya!</span>
-                </div>
-                <div style="display:inline-block; max-width:300px; vertical-align:top;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfmzcV0EsnE9yLa6hleEWP20BOaMUP3xI5NhfQaWSq5zLbfsg/viewform?usp=header" target="_blank" class="btn btn-quiz">📝 Tantangan Puasa Ekstra</a>
-                    <span class="btn-desc">Selesaikan kuis ini untuk melihat pengetahuanmu!</span>
-                </div>
+                <a href="https://gemini.google.com/share/930f132ad4be" target="_blank" class="btn-game">🎮 Detektif Puasa Sunnah</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfmzcV0EsnE9yLa6hleEWP20BOaMUP3xI5NhfQaWSq5zLbfsg/viewform" target="_blank" class="btn-quiz">📝 Kuis Puasa Ekstra</a>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Fungsi untuk Navigasi antar Halaman Utama / Bab
+        // --- FITUR 1: LOGIKA TOGGLE MENU/SIDEBAR ---
+        const toggleBtn = document.getElementById('toggleBtn');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const mainContent = document.getElementById('mainContent');
+
+        toggleBtn.addEventListener('click', () => {
+            if(window.innerWidth > 768) {
+                // Mode Desktop: toggle class collapse
+                sidebarMenu.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            } else {
+                // Mode Mobile: toggle sidebar meluncur dari kiri
+                sidebarMenu.classList.toggle('mobile-open');
+            }
+        });
+
+        // --- FITUR 2: NAVIGASI PINDAH BAB ---
         function showView(viewId, element) {
+            // Sembunyikan semua bab
             const sections = document.querySelectorAll('.chapter-section');
             sections.forEach(sec => sec.classList.remove('active'));
 
+            // Hapus status aktif dari semua menu
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
 
+            // Tampilkan bab yang dituju
             document.getElementById(viewId).classList.add('active');
             
-            if(element) {
-                element.classList.add('active');
+            if(element) element.classList.add('active');
+
+            // Jika di mobile, tutup sidebar setelah klik menu
+            if(window.innerWidth <= 768) {
+                sidebarMenu.classList.remove('mobile-open');
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Fungsi Baru untuk Navigasi antar Sub-bab (Tab System)
-        function openSubBab(event, subbabId, chapterId) {
-            // Cari elemen Bab yang sedang aktif
+        // --- FITUR 3: NAVIGASI PINDAH SUB-BAB ---
+        function openSubBab(subbabId, chapterId, btnId) {
             const chapter = document.getElementById(chapterId);
             
-            // Sembunyikan semua konten sub-bab di dalam Bab ini
+            // Sembunyikan semua sub-bab
             const subContents = chapter.querySelectorAll('.subbab-content');
-            subContents.forEach(content => {
-                content.classList.remove('active');
-            });
+            subContents.forEach(content => content.classList.remove('active'));
 
-            // Matikan warna (status aktif) dari semua tombol sub-bab di Bab ini
+            // Matikan warna tombol
             const subBtns = chapter.querySelectorAll('.subbab-btn');
-            subBtns.forEach(btn => {
-                btn.classList.remove('active');
-            });
+            subBtns.forEach(btn => btn.classList.remove('active'));
 
-            // Tampilkan hanya sub-bab yang diklik dan nyalakan warna tombolnya
+            // Buka yang baru
             document.getElementById(subbabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            document.getElementById(btnId).classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
