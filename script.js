@@ -1,26 +1,40 @@
-document.addEventListener("DOMContentLoaded", function() {
+// Mengatur Hamburger Menu Mobile
+const mobileMenu = document.getElementById('mobile-menu');
+const navMenu = document.getElementById('nav-menu');
+
+mobileMenu.addEventListener('click', () => {
+    // Toggle class 'active' untuk memunculkan/menyembunyikan menu
+    navMenu.classList.toggle('active');
     
-    // Logika Navbar Mobile
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('nav-links');
+    // Animasi icon hamburger menjadi silang (X)
+    mobileMenu.classList.toggle('is-active');
+});
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-    }
-
-    // Penanganan Jika Gambar Gagal Dimuat
-    document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('error', function() {
-            this.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" style="background:%23cccccc"%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14px" fill="%23333333"%3EGambar Belum Ditambahkan%3C/text%3E%3C/svg%3E';
-            this.alt = "Gambar tidak tersedia";
-        });
+// Tutup menu otomatis jika salah satu link diklik (di mode mobile)
+const navLinks = document.querySelectorAll('.nav-links');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
     });
 });
+
+// Fitur Lama: Animasi Scroll (Intersection Observer)
+// Elemen akan muncul perlahan saat discroll ke area pandang
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15 // Animasi mulai saat 15% elemen terlihat
+};
+
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target); // Animasi hanya terjadi sekali
+        }
+    });
+}, observerOptions);
+
+// Pilih semua elemen dengan class animasi
+const animatedElements = document.querySelectorAll('.fade-in, .slide-in');
+animatedElements.forEach(el => observer.observe(el));
