@@ -1,43 +1,37 @@
-// Hamburger Menu Toggle
+// Navigasi Mobile
 const mobileMenu = document.getElementById('mobile-menu');
 const navMenu = document.getElementById('nav-menu');
 
-mobileMenu.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    mobileMenu.classList.toggle('is-active');
-});
+if (mobileMenu) {
+    mobileMenu.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+}
 
-// Tutup menu otomatis setelah klik (Mobile)
 const navLinks = document.querySelectorAll('.nav-links');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
+        if(navMenu) navMenu.classList.remove('active');
     });
 });
 
-// Smooth Scrolling Navigasi Internal
+// Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
-        
         if (targetElement) {
             window.scrollTo({
-                top: targetElement.offsetTop - 70, // Offset untuk tinggi navbar
+                top: targetElement.offsetTop - 70,
                 behavior: 'smooth'
             });
         }
     });
 });
 
-// Animasi Scroll (Intersection Observer)
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.15 
-};
-
+// Animasi Fade-in (Intersection Observer)
+const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
 const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
