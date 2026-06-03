@@ -134,7 +134,11 @@
                 <div class="content-header"><h1>4. Video Pembelajaran Rawatib</h1></div>
                 <div class="content-body">
                     <div class="intro-box">Tonton video animasi di bawah ini agar pemahaman Kakak semakin mantap.</div>
-                    <div class="iframe-container"><iframe src="https://www.youtube.com/embed/7o30T9-NYI4" allowfullscreen></iframe></div>
+                    <div class="iframe-wrapper">
+                        <div class="iframe-container">
+                            <iframe src="https://www.youtube.com/embed/7o30T9-NYI4" allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
                 <div class="action-buttons"><button class="btn-lms-action btn-complete" onclick="markComplete('l1-4', 'l1-5')">Tandai Selesai & Lanjut ➔</button></div>
             </div>
@@ -171,7 +175,11 @@
                 <div class="content-header"><h1>3. Video Tarawih & Witir</h1></div>
                 <div class="content-body">
                     <div class="intro-box">Simak panduan visual shalat malam berikut ini ya Kak!</div>
-                    <div class="iframe-container"><iframe src="https://www.youtube.com/embed/7ewEvRK4g10" allowfullscreen></iframe></div>
+                    <div class="iframe-wrapper">
+                        <div class="iframe-container">
+                            <iframe src="https://www.youtube.com/embed/7ewEvRK4g10" allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
                 <div class="action-buttons"><button class="btn-lms-action btn-complete" onclick="markComplete('l2-3', 'l2-4')">Tandai Selesai & Lanjut ➔</button></div>
             </div>
@@ -204,7 +212,11 @@
             <div id="l3-3" class="lesson-content">
                 <div class="content-header"><h1>3. Video Panduan Shalat Khusus</h1></div>
                 <div class="content-body">
-                    <div class="iframe-container"><iframe src="https://www.youtube.com/embed/kc-5C-uV5Hk" allowfullscreen></iframe></div>
+                    <div class="iframe-wrapper">
+                        <div class="iframe-container">
+                            <iframe src="https://www.youtube.com/embed/kc-5C-uV5Hk" allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
                 <div class="action-buttons"><button class="btn-lms-action btn-complete" onclick="markComplete('l3-3', 'l3-4')">Tandai Selesai & Lanjut ➔</button></div>
             </div>
@@ -237,7 +249,11 @@
             <div id="l4-3" class="lesson-content">
                 <div class="content-header"><h1>3. Video Penjelasan Ramadhan</h1></div>
                 <div class="content-body">
-                    <div class="iframe-container"><iframe src="https://www.youtube.com/embed/sjRd94ZaPSI" allowfullscreen></iframe></div>
+                    <div class="iframe-wrapper">
+                        <div class="iframe-container">
+                            <iframe src="https://www.youtube.com/embed/sjRd94ZaPSI" allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
                 <div class="action-buttons"><button class="btn-lms-action btn-complete" onclick="markComplete('l4-3', 'l4-4')">Tandai Selesai & Lanjut ➔</button></div>
             </div>
@@ -255,7 +271,11 @@
                 <div class="content-header"><h1>1. Slide Macam Puasa Sunnah</h1></div>
                 <div class="content-body">
                     <div class="intro-box">Geser slide presentasi di bawah untuk mengetahui puasa apa saja yang disunnahkan Rasulullah.</div>
-                    <div class="iframe-container"><iframe src="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view?embed" allowfullscreen></iframe></div>
+                    <div class="iframe-wrapper">
+                        <div class="iframe-container">
+                            <iframe src="https://www.canva.com/design/DAHJnHYPH2w/FHrJwm6hhopdkLDo4CUwgA/view?embed" allowfullscreen></iframe>
+                        </div>
+                    </div>
                     <img src="https://i.ibb.co.com/RTWxfPC4/Chat-GPT-Image-May-18-2026-05-50-57-AM.png">
                 </div>
                 <div class="action-buttons"><button class="btn-lms-action btn-complete" onclick="markComplete('l5-1', 'l5-2')">Tandai Selesai & Lanjut ➔</button></div>
@@ -271,7 +291,11 @@
             <div id="l5-3" class="lesson-content">
                 <div class="content-header"><h1>3. Video Puasa Sunnah</h1></div>
                 <div class="content-body">
-                    <div class="iframe-container"><iframe src="https://www.youtube.com/embed/e1jEjuLCMPA" allowfullscreen></iframe></div>
+                    <div class="iframe-wrapper">
+                        <div class="iframe-container">
+                            <iframe src="https://www.youtube.com/embed/e1jEjuLCMPA" allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
                 <div class="action-buttons"><button class="btn-lms-action btn-complete" onclick="markComplete('l5-3', 'l5-4')">Tandai Selesai & Lanjut ➔</button></div>
             </div>
@@ -292,13 +316,13 @@
 </div>
 
 <script>
-    // LMS Logic
+    // LMS Logic (Khusus menangani sidebar dan progress belajar)
     const allLessonIds = ['l-intro', 'l1-1', 'l1-2', 'l1-3', 'l1-4', 'l1-5', 'l2-1', 'l2-2', 'l2-3', 'l2-4', 'l3-1', 'l3-2', 'l3-3', 'l3-4', 'l4-1', 'l4-2', 'l4-3', 'l4-4', 'l5-1', 'l5-2', 'l5-3', 'l5-4'];
     let completedLessons = JSON.parse(localStorage.getItem('genmuProgress')) || [];
 
     function initLMS() {
         updateProgress();
-        // Load last active lesson or default to intro
+        // Membuka materi yang terakhir kali diakses siswa (Jika tidak ada, default intro)
         let lastActive = localStorage.getItem('genmuLastActive') || 'l-intro';
         loadLesson(lastActive, false);
     }
@@ -315,15 +339,15 @@
     }
 
     function loadLesson(id, autoScroll = true) {
-        // Hide all contents
+        // Menyembunyikan semua konten materi
         document.querySelectorAll('.lesson-content').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.lesson-item').forEach(item => item.classList.remove('active'));
         
-        // Show target
+        // Menampilkan materi target
         const targetContent = document.getElementById(id);
         if(targetContent) targetContent.classList.add('active');
         
-        // Mark sidebar item active and open its parent accordion
+        // Mengubah status menu sidebar menjadi aktif & membuka menu drop-down induknya
         const targetSidebarItem = document.querySelector(`.lesson-item[data-id="${id}"]`);
         if(targetSidebarItem) {
             targetSidebarItem.classList.add('active');
@@ -337,24 +361,28 @@
             parentHeader.classList.add('active');
         }
 
-        // Save state
+        // Menyimpan posisi terakhir siswa
         localStorage.setItem('genmuLastActive', id);
         
+        // Otomatis menutup sidebar di tampilan mobile setelah memilih materi
         if(window.innerWidth <= 900) {
             document.getElementById('lmsSidebar').classList.remove('open');
         }
 
+        // Otomatis scroll ke bagian atas materi
         if(autoScroll) {
             document.querySelector('.lms-content-area').scrollTo({top: 0, behavior: 'smooth'});
         }
     }
 
     function markComplete(currentId, nextId) {
+        // Mencatat materi yang sudah selesai dipelajari
         if (!completedLessons.includes(currentId)) {
             completedLessons.push(currentId);
             localStorage.setItem('genmuProgress', JSON.stringify(completedLessons));
             updateProgress();
         }
+        // Melanjutkan ke materi berikutnya
         loadLesson(nextId);
     }
 
@@ -363,10 +391,11 @@
         let done = completedLessons.length;
         let percent = Math.round((done / total) * 100);
         
+        // Memperbarui visual Progress Bar
         document.getElementById('progressBar').style.width = percent + '%';
         document.getElementById('progressPercent').innerText = percent + '%';
         
-        // Add checkmarks to sidebar
+        // Menambahkan ikon centang di daftar menu sidebar
         completedLessons.forEach(id => {
             let item = document.querySelector(`.lesson-item[data-id="${id}"]`);
             if(item) item.classList.add('completed');
@@ -379,10 +408,10 @@
             localStorage.setItem('genmuProgress', JSON.stringify(completedLessons));
             updateProgress();
         }
-        alert('Selamat Kak! Kakak sudah menyelesaikan semua materi di Ruang Belajar Gen-Mu dengan hebat! 🎉');
+        alert('Selamat Kak! Kakak sudah menyelesaikan semua materi di Ruang Belajar Gen-Mu dengan sangat hebat! 🎉');
     }
 
-    // Run on load
+    // Menjalankan inisialisasi LMS ketika halaman dimuat
     window.onload = initLMS;
 </script>
 
