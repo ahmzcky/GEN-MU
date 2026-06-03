@@ -106,15 +106,100 @@ footer { background-color: var(--text-secondary); color: var(--text-main); text-
 .user-profile { display: flex; align-items: center; gap: 10px; font-weight: 600; }
 .user-avatar { width: 35px; height: 35px; background: var(--card-bg); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; }
 
-.lms-content-area { flex: 1; padding: 30px; overflow-y: auto; background: var(--bg-light); }
-.lesson-content { display: none; max-width: 800px; margin: 0 auto; background: var(--secondary); padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-.lesson-content.active { display: block; animation: fadeIn 0.4s ease; }
-.content-header { margin-bottom: 25px; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; }
-.content-header h1 { color: var(--primary); font-size: 2rem; margin-bottom: 10px; }
-.content-body img { max-width: 100%; border-radius: 10px; margin: 15px 0; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-.content-body .intro-box { background: #e6f2ff; padding: 15px; border-radius: 8px; border-left: 5px solid var(--primary); margin-bottom: 20px; color: var(--primary-dark); font-weight: 500; }
-.iframe-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 10px; overflow: hidden; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-.iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+/* =========================================================
+   PERBAIKAN AREA KONTEN MATERI (KARTU MATERI LMS)
+========================================================= */
+.lms-content-area { 
+    flex: 1; 
+    padding: 30px; 
+    overflow-y: auto; 
+    background: var(--bg-light); 
+    line-height: 1.7; /* Line-height nyaman dibaca */
+}
+
+/* BATASI LEBAR KONTEN & DESAIN KARTU */
+.lesson-content { 
+    display: none; 
+    max-width: 900px; /* Batas maksimal lebar materi */
+    margin: 0 auto; /* Otomatis ke tengah layar */
+    background: var(--secondary); 
+    padding: 32px; /* Padding cukup agar lega */
+    border-radius: 16px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Shadow ringan */
+}
+.lesson-content.active { 
+    display: block; 
+    animation: fadeIn 0.4s ease; 
+}
+
+/* UKURAN TEKS (DESKTOP) */
+.content-header { 
+    margin-bottom: 25px; 
+    border-bottom: 2px solid #f0f0f0; 
+    padding-bottom: 15px; 
+}
+.content-header h1 { 
+    color: var(--primary); 
+    font-size: 2.2rem; /* Ukuran proporsional */
+    margin-bottom: 10px; 
+    line-height: 1.3;
+}
+.content-body p, 
+.content-body .intro-box {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+.intro-box { 
+    background: #e6f2ff; 
+    padding: 15px; 
+    border-radius: 8px; 
+    border-left: 5px solid var(--primary); 
+    margin-bottom: 20px; 
+    color: var(--primary-dark); 
+    font-weight: 500; 
+}
+
+/* BATASI UKURAN GAMBAR MATERI */
+.content-body img {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    margin: 25px auto; /* Otomatis ke tengah */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+/* Memastikan gambar utama maksimal 500px di layar besar */
+@media (min-width: 768px) {
+    .content-body img { 
+        max-width: 500px; 
+    }
+}
+
+/* BATASI UKURAN VIDEO / IFRAME */
+.iframe-wrapper {
+    max-width: 700px; /* Batas maksimal lebar video */
+    margin: 30px auto; /* Otomatis ke tengah */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+/* Menggunakan Aspect Ratio Modern (Lebih Rapi) */
+.iframe-container { 
+    position: relative; 
+    width: 100%; 
+    aspect-ratio: 16 / 9; 
+}
+.iframe-container iframe { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    border: 0; 
+}
+
+/* TOMBOL AKSI BAWAH */
 .action-buttons { margin-top: 40px; display: flex; gap: 15px; flex-wrap: wrap; }
 .btn-lms-action { display: inline-flex; align-items: center; justify-content: center; padding: 12px 25px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; font-size: 1rem; }
 .btn-complete { background: var(--success); color: white; flex: 1; }
@@ -122,19 +207,41 @@ footer { background-color: var(--text-secondary); color: var(--text-main); text-
 .btn-external { background: var(--card-bg); color: var(--text-secondary); border: 1px solid #e0b000; }
 .btn-external:hover { background: #ffc107; transform: translateY(-2px); }
 
-/* RESPONSIVE */
+/* =========================================================
+   RESPONSIVE (MOBILE & TABLET)
+========================================================= */
 @media (max-width: 900px) {
     .lms-sidebar { position: fixed; left: -300px; height: 100%; box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
     .lms-sidebar.open { left: 0; }
     .mobile-toggle { display: block; }
+    
     .nav-menu { position: absolute; top: 70px; left: -100%; flex-direction: column; background-color: var(--secondary); width: 100%; text-align: center; padding: 20px 0; box-shadow: 0 5px 10px rgba(0,0,0,0.1); transition: 0.3s; }
     .nav-menu.active { left: 0; }
     .menu-toggle { display: flex; }
     .team-card { width: calc(50% - 15px); }
 }
+
+@media (max-width: 768px) {
+    /* Perbaikan padding di mobile */
+    .lms-content-area { padding: 15px; }
+    .lesson-content { 
+        padding: 16px; 
+        border-radius: 12px;
+    }
+    
+    /* Ukuran Teks Mobile proporsional */
+    .content-header h1 { font-size: 1.6rem; }
+    .content-body p, 
+    .content-body .intro-box { font-size: 0.95rem; }
+    
+    .action-buttons { flex-direction: column; }
+    .btn-lms-action { width: 100%; }
+}
+
 @media (max-width: 600px) {
     .lms-header { flex-wrap: wrap; gap: 10px; padding: 15px; }
     .progress-container { order: 3; width: 100%; max-width: 100%; margin: 10px 0 0 0; }
-    .lesson-content { padding: 20px; }
     .team-card { width: 100%; }
 }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
